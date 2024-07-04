@@ -40,7 +40,20 @@ const HomeScreen = ({ navigation }) => {
     );
 };
 
-const HomeScreenStyles = StyleSheet.create({
+const TaleScreen = ({ route }) => {
+    const { tale } = route.params;
+
+    return (
+        <SafeAreaView style={taleStyles.container}>
+            <View style={taleStyles.taleContainer}>
+                <Image source={{ uri: tale.imageUrl }} style={taleStyles.taleImage} />
+                <Text style={taleStyles.taleTitle}>{tale.title}</Text>
+            </View>
+        </SafeAreaView>
+    );
+};
+
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f0f7ff',
@@ -68,20 +81,7 @@ const HomeScreenStyles = StyleSheet.create({
     },
 });
 
-const TaleScreen = ({ route }) => {
-    const { tale } = route.params;
-
-    return (
-        <SafeAreaView style={TaleScreenStyles.container}>
-            <View style={TaleScreenStyles.taleContainer}>
-                <Image source={{ uri: tale.imageUrl }} style={TaleScreenStyles.taleImage} />
-                <Text style={TaleScreenStyles.taleTitle}>{tale.title}</Text>
-            </View>
-        </SafeAreaView>
-    );
-};
-
-const TaleScreenStyles = StyleSheet.create({
+const taleStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#e5f6df',
