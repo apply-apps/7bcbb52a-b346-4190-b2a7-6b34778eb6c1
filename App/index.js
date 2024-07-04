@@ -6,6 +6,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView, FlatList, TouchableOpacity, Text, StyleSheet, View, Image } from 'react-native';
 
+const Stack = createStackNavigator();
+
 const tales = [
     { id: '1', title: 'Cinderella', imageUrl: 'https://picsum.photos/200/300?random=1' },
     { id: '2', title: 'Snow White', imageUrl: 'https://picsum.photos/200/300?random=2' },
@@ -14,29 +16,31 @@ const tales = [
     { id: '5', title: 'Hansel and Gretel', imageUrl: 'https://picsum.photos/200/300?random=5' },
 ];
 
+const colors = ['#ff9999', '#99ff99', '#9999ff', '#ffcc99', '#ff99ff'];
+
 const HomeScreen = ({ navigation }) => {
-    const renderItem = ({ item }) => (
+    const renderItem = ({ item, index }) => (
         <TouchableOpacity
-            style={stylesHome.itemContainer}
+            style={[styles.itemContainer, { backgroundColor: colors[index % colors.length] }]}
             onPress={() => navigation.navigate('Tale', { tale: item })}
         >
-            <Text style={stylesHome.itemText}>{item.title}</Text>
+            <Text style={styles.itemText}>{item.title}</Text>
         </TouchableOpacity>
     );
 
     return (
-        <SafeAreaView style={stylesHome.container}>
+        <SafeAreaView style={styles.container}>
             <FlatList
                 data={tales}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
-                contentContainerStyle={stylesHome.list}
+                contentContainerStyle={styles.list}
             />
         </SafeAreaView>
     );
 };
 
-const stylesHome = StyleSheet.create({
+const HomeScreenStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f0f7ff',
@@ -60,7 +64,7 @@ const stylesHome = StyleSheet.create({
     itemText: {
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#ff9234',
+        color: '#fff',
     },
 });
 
@@ -68,16 +72,16 @@ const TaleScreen = ({ route }) => {
     const { tale } = route.params;
 
     return (
-        <SafeAreaView style={stylesTale.container}>
-            <View style={stylesTale.taleContainer}>
-                <Image source={{ uri: tale.imageUrl }} style={stylesTale.taleImage} />
-                <Text style={stylesTale.taleTitle}>{tale.title}</Text>
+        <SafeAreaView style={TaleScreenStyles.container}>
+            <View style={TaleScreenStyles.taleContainer}>
+                <Image source={{ uri: tale.imageUrl }} style={TaleScreenStyles.taleImage} />
+                <Text style={TaleScreenStyles.taleTitle}>{tale.title}</Text>
             </View>
         </SafeAreaView>
     );
 };
 
-const stylesTale = StyleSheet.create({
+const TaleScreenStyles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#e5f6df',
@@ -102,8 +106,6 @@ const stylesTale = StyleSheet.create({
         textAlign: 'center',
     },
 });
-
-const Stack = createStackNavigator();
 
 export default function App() {
     return (
