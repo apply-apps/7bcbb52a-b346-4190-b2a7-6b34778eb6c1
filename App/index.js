@@ -6,8 +6,6 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SafeAreaView, FlatList, TouchableOpacity, Text, StyleSheet, View, Image } from 'react-native';
 
-const Stack = createStackNavigator();
-
 const tales = [
     { id: '1', title: 'Cinderella', imageUrl: 'https://picsum.photos/200/300?random=1' },
     { id: '2', title: 'Snow White', imageUrl: 'https://picsum.photos/200/300?random=2' },
@@ -19,60 +17,71 @@ const tales = [
 const HomeScreen = ({ navigation }) => {
     const renderItem = ({ item }) => (
         <TouchableOpacity
-            style={styles.itemContainer}
+            style={stylesHome.itemContainer}
             onPress={() => navigation.navigate('Tale', { tale: item })}
         >
-            <Text style={styles.itemText}>{item.title}</Text>
+            <Text style={stylesHome.itemText}>{item.title}</Text>
         </TouchableOpacity>
     );
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={stylesHome.container}>
             <FlatList
                 data={tales}
                 renderItem={renderItem}
                 keyExtractor={(item) => item.id}
-                contentContainerStyle={styles.list}
+                contentContainerStyle={stylesHome.list}
             />
         </SafeAreaView>
     );
 };
 
-const TaleScreen = ({ route }) => {
-    const { tale } = route.params;
-
-    return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.taleContainer}>
-                <Image source={{ uri: tale.imageUrl }} style={styles.taleImage} />
-                <Text style={styles.taleTitle}>{tale.title}</Text>
-            </View>
-        </SafeAreaView>
-    );
-};
-
-const styles = StyleSheet.create({
+const stylesHome = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#f0f7ff',
         marginTop: 10,
     },
     list: {
         padding: 20,
     },
     itemContainer: {
-        backgroundColor: '#fff',
+        backgroundColor: '#ffebd6',
         padding: 20,
-        borderRadius: 10,
+        borderRadius: 15,
         shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: 10,
+        shadowOpacity: 0.3,
+        shadowRadius: 15,
         marginVertical: 10,
-        borderWidth: 1,
-        borderColor: "#ddd",
+        borderWidth: 2,
+        borderColor: "#ffa446",
+        alignItems: 'center',
     },
     itemText: {
-        fontSize: 18,
+        fontSize: 20,
+        fontWeight: 'bold',
+        color: '#ff9234',
+    },
+});
+
+const TaleScreen = ({ route }) => {
+    const { tale } = route.params;
+
+    return (
+        <SafeAreaView style={stylesTale.container}>
+            <View style={stylesTale.taleContainer}>
+                <Image source={{ uri: tale.imageUrl }} style={stylesTale.taleImage} />
+                <Text style={stylesTale.taleTitle}>{tale.title}</Text>
+            </View>
+        </SafeAreaView>
+    );
+};
+
+const stylesTale = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#e5f6df',
+        marginTop: 10,
     },
     taleContainer: {
         padding: 20,
@@ -81,14 +90,20 @@ const styles = StyleSheet.create({
     taleImage: {
         width: 200,
         height: 300,
-        borderRadius: 10,
+        borderRadius: 20,
+        borderColor: '#70a1cf',
+        borderWidth: 3,
         marginBottom: 20,
     },
     taleTitle: {
-        fontSize: 24,
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#4d8acb',
         textAlign: 'center',
     },
 });
+
+const Stack = createStackNavigator();
 
 export default function App() {
     return (
